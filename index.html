@@ -13,6 +13,29 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            /* 移除移动端点击高亮 */
+        }
+
+        /* 移动端滚动优化 */
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        /* 移动端触摸优化 */
+        button,
+        .btn,
+        .shoe-card,
+        .control-card,
+        .tab-item {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
         }
 
         body {
@@ -717,9 +740,393 @@
             margin-bottom: 8px;
         }
 
+        /* 响应式设计 - 平板和小屏幕 */
         @media (max-width: 992px) {
             .dashboard {
                 grid-template-columns: 1fr;
+            }
+
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            header {
+                padding: 20px 25px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .logo-text h1 {
+                font-size: 24px;
+            }
+
+            .logo-text .subtitle {
+                font-size: 13px;
+            }
+
+            .controls-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+            }
+
+            .shoes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        /* 响应式设计 - 手机端 */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+                overflow-x: hidden;
+            }
+
+            /* 移动端深空背景性能优化 */
+            .space-background {
+                transform: scale(0.8);
+                transform-origin: center;
+            }
+
+            /* 登录界面移动端优化 */
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 25px 20px;
+                border-radius: 15px;
+                max-width: 100%;
+                margin: 0 10px;
+            }
+
+            .login-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+                margin-bottom: 15px;
+            }
+
+            .login-header h1 {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .login-header p {
+                font-size: 14px;
+            }
+
+            .input-group input {
+                padding: 12px 12px 12px 40px;
+                font-size: 16px;
+                /* 防止iOS缩放 */
+            }
+
+            .login-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .login-tips {
+                padding: 12px;
+                margin-top: 15px;
+            }
+
+            .login-tips p {
+                font-size: 13px;
+            }
+
+            /* 主界面移动端优化 */
+            .container {
+                margin: 5px;
+                border-radius: 10px;
+            }
+
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .logo-area {
+                justify-content: center;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .logo-text h1 {
+                font-size: 20px;
+            }
+
+            .logo-text .subtitle {
+                font-size: 12px;
+                margin-top: 3px;
+            }
+
+            .user-info {
+                margin-left: 0;
+                padding-left: 0;
+                justify-content: center;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .dashboard {
+                padding: 20px 15px;
+                gap: 20px;
+            }
+
+            .section {
+                padding: 20px 15px;
+                border-radius: 12px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .section-title {
+                font-size: 18px;
+                min-width: auto;
+            }
+
+            .section-title i {
+                font-size: 20px;
+            }
+
+            .btn.compact {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .shoes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 12px;
+            }
+
+            .shoe-card {
+                border-radius: 10px;
+            }
+
+            .shoe-image {
+                height: 80px;
+                font-size: 30px;
+            }
+
+            .shoe-info {
+                padding: 12px 8px;
+            }
+
+            .shoe-name {
+                font-size: 14px;
+            }
+
+            .shoe-meta {
+                font-size: 12px;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .control-card {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .control-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+                margin-bottom: 15px;
+            }
+
+            .control-title {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .control-desc {
+                font-size: 13px;
+                min-height: 40px;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .sidebar .status-card {
+                padding: 20px 15px;
+            }
+
+            .status-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .status-item {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .status-value {
+                font-size: 24px;
+            }
+
+            .status-label {
+                font-size: 13px;
+            }
+
+            .robot-section {
+                padding: 20px 15px;
+            }
+
+            .robot-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .robot-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .robot-info h3 {
+                font-size: 18px;
+            }
+
+            .robot-controls {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .robot-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .tab-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+            }
+
+            .tab-item {
+                padding: 12px 0;
+                font-size: 12px;
+            }
+
+            .tab-item i {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+
+            /* 深空背景移动端优化 */
+            .nebula {
+                filter: blur(30px) !important;
+            }
+
+            .galaxy {
+                width: 120px !important;
+                height: 120px !important;
+            }
+
+            .star.large {
+                width: 2px;
+                height: 2px;
+            }
+
+            .star.medium {
+                width: 1.5px;
+                height: 1.5px;
+            }
+        }
+
+        /* 响应式设计 - 小屏手机 */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 20px 15px;
+                margin: 0 5px;
+            }
+
+            .login-header h1 {
+                font-size: 20px;
+            }
+
+            .login-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .container {
+                margin: 2px;
+            }
+
+            .dashboard {
+                padding: 15px 10px;
+            }
+
+            .section {
+                padding: 15px 10px;
+            }
+
+            .shoes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+                gap: 10px;
+            }
+
+            .shoe-image {
+                height: 70px;
+                font-size: 24px;
+            }
+
+            .shoe-info {
+                padding: 10px 6px;
+            }
+
+            .shoe-name {
+                font-size: 13px;
+            }
+
+            .control-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .control-title {
+                font-size: 15px;
+            }
+
+            .control-desc {
+                font-size: 12px;
+                min-height: 35px;
             }
         }
 
