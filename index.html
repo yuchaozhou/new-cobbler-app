@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能鞋柜 - 未来科技登录</title>
+    <title>NEW COBBLER - 智能鞋柜管理系统</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- GSAP 动画库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         * {
@@ -13,157 +14,24 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            /* 移除移动端点击高亮 */
-        }
-
-        /* 移动端滚动优化 */
-        html {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-
-        /* 移动端触摸优化 */
-        button,
-        .btn,
-        .shoe-card,
-        .control-card,
-        .tab-item {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            touch-action: manipulation;
         }
 
         body {
-            background: radial-gradient(ellipse at center, #0a0a23 0%, #000000 100%);
+            background: linear-gradient(135deg, #0f1b3a, #2c3e50);
             color: #fff;
             min-height: 100vh;
             padding: 20px;
             position: relative;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            /* iOS 平滑滚动 */
         }
 
-        /* 深空背景容器 */
-        .space-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -10;
-            overflow: hidden;
-        }
-
-        /* 星空层 */
-        .stars-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-        }
-
-        .star.small {
-            width: 1px;
-            height: 1px;
-        }
-
-        .star.medium {
-            width: 2px;
-            height: 2px;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-        }
-
-        .star.large {
-            width: 3px;
-            height: 3px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
-        }
-
-        /* 星云效果 */
-        .nebula {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.3;
-        }
-
-        .nebula.blue {
-            background: radial-gradient(circle, rgba(64, 224, 255, 0.4) 0%, transparent 70%);
-        }
-
-        .nebula.purple {
-            background: radial-gradient(circle, rgba(138, 43, 226, 0.4) 0%, transparent 70%);
-        }
-
-        .nebula.pink {
-            background: radial-gradient(circle, rgba(255, 20, 147, 0.3) 0%, transparent 70%);
-        }
-
-        /* 流星效果 */
-        .meteor {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: linear-gradient(45deg, #fff, transparent);
-            border-radius: 50%;
-            opacity: 0;
-        }
-
-        .meteor::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50px;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
-            transform: rotate(-45deg);
-            transform-origin: 0 0;
-        }
-
-        /* 脉冲星效果 */
-        .pulsar {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #40e0ff;
-            border-radius: 50%;
-            box-shadow:
-                0 0 10px #40e0ff,
-                0 0 20px #40e0ff,
-                0 0 30px #40e0ff;
-        }
-
-        /* 星系旋转效果 */
-        .galaxy {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(ellipse at center,
-                    rgba(255, 255, 255, 0.1) 0%,
-                    rgba(64, 224, 255, 0.05) 30%,
-                    transparent 70%);
-            opacity: 0.6;
-        }
-
-        /* 粒子效果 */
-        .particle {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
         }
 
         body::before {
@@ -173,11 +41,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(64, 224, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(255, 20, 147, 0.08) 0%, transparent 50%);
-            z-index: -5;
+            background: radial-gradient(circle at top right, rgba(26, 42, 108, 0.2), transparent 70%);
+            z-index: -1;
         }
 
         .container {
@@ -189,59 +54,93 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 100;
         }
 
         header {
-            background: linear-gradient(to right, #1a2a6c, #3a7bd5);
+            background: linear-gradient(135deg, #1a2a6c 0%, #3a7bd5 50%, #2980b9 100%);
             color: white;
-            padding: 25px 40px;
+            padding: 20px 40px;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            min-height: 80px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    transparent 50%,
+                    rgba(0, 0, 0, 0.05) 100%);
+            pointer-events: none;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 15px;
-            flex: 1;
+            gap: 12px;
+            flex: 0 0 auto;
+            /* 不允许伸缩，保持固定大小 */
+            position: relative;
+            z-index: 1;
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 24px;
             color: #FFD700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .logo-text h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            margin: 0;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .logo-text .subtitle {
-            font-size: 15px;
-            opacity: 0.85;
-            margin-top: 5px;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 2px;
             color: #e0e0ff;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .header-spacer {
+            flex: 1;
+            /* 占据所有剩余空间 */
+            min-width: 20px;
+            /* 确保最小间距 */
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-left: auto;
-            padding-left: 20px;
+            gap: 12px;
+            flex: 0 0 auto;
+            /* 不允许伸缩，保持固定大小 */
+            position: relative;
+            z-index: 1;
         }
 
         .user-status {
@@ -250,18 +149,22 @@
 
         .user-status .name {
             font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
+            margin: 0;
+            color: #ffffff;
         }
 
         .user-status .role {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-top: 3px;
+            font-size: 12px;
+            opacity: 0.85;
+            margin-top: 2px;
+            color: #4fc3f7;
+            font-weight: 500;
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: linear-gradient(135deg, #4a90e2, #1a2a6c);
             display: flex;
@@ -269,8 +172,15 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
         .dashboard {
@@ -740,449 +650,386 @@
             margin-bottom: 8px;
         }
 
-        /* 响应式设计 - 平板和小屏幕 */
         @media (max-width: 992px) {
             .dashboard {
                 grid-template-columns: 1fr;
-            }
-
-            .container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-
-            header {
-                padding: 20px 25px;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-
-            .logo-text h1 {
-                font-size: 24px;
-            }
-
-            .logo-text .subtitle {
-                font-size: 13px;
-            }
-
-            .controls-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                gap: 15px;
-            }
-
-            .shoes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 15px;
-            }
-        }
-
-        /* 响应式设计 - 手机端 */
-        @media (max-width: 768px) {
-            body {
-                padding: 5px;
-                overflow-x: hidden;
-            }
-
-            /* 移动端深空背景性能优化 */
-            .space-background {
-                transform: scale(0.8);
-                transform-origin: center;
-            }
-
-            /* 登录界面移动端优化 */
-            .login-container {
-                padding: 15px;
-            }
-
-            .login-card {
-                padding: 25px 20px;
-                border-radius: 15px;
-                max-width: 100%;
-                margin: 0 10px;
-            }
-
-            .login-logo {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-                margin-bottom: 15px;
-            }
-
-            .login-header h1 {
-                font-size: 24px;
-                margin-bottom: 8px;
-            }
-
-            .login-header p {
-                font-size: 14px;
-            }
-
-            .input-group input {
-                padding: 12px 12px 12px 40px;
-                font-size: 16px;
-                /* 防止iOS缩放 */
-            }
-
-            .login-btn {
-                padding: 12px;
-                font-size: 16px;
-            }
-
-            .login-tips {
-                padding: 12px;
-                margin-top: 15px;
-            }
-
-            .login-tips p {
-                font-size: 13px;
-            }
-
-            /* 主界面移动端优化 */
-            .container {
-                margin: 5px;
-                border-radius: 10px;
-            }
-
-            header {
-                padding: 15px 20px;
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-
-            .logo-area {
-                justify-content: center;
-            }
-
-            .logo {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-
-            .logo-text h1 {
-                font-size: 20px;
-            }
-
-            .logo-text .subtitle {
-                font-size: 12px;
-                margin-top: 3px;
-            }
-
-            .user-info {
-                margin-left: 0;
-                padding-left: 0;
-                justify-content: center;
-            }
-
-            .avatar {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-
-            .dashboard {
-                padding: 20px 15px;
-                gap: 20px;
-            }
-
-            .section {
-                padding: 20px 15px;
-                border-radius: 12px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .section-title {
-                font-size: 18px;
-                min-width: auto;
-            }
-
-            .section-title i {
-                font-size: 20px;
-            }
-
-            .btn.compact {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-
-            .shoes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-                gap: 12px;
-            }
-
-            .shoe-card {
-                border-radius: 10px;
-            }
-
-            .shoe-image {
-                height: 80px;
-                font-size: 30px;
-            }
-
-            .shoe-info {
-                padding: 12px 8px;
-            }
-
-            .shoe-name {
-                font-size: 14px;
-            }
-
-            .shoe-meta {
-                font-size: 12px;
-            }
-
-            .controls-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .control-card {
-                padding: 15px;
-                border-radius: 10px;
-            }
-
-            .control-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-                margin-bottom: 15px;
-            }
-
-            .control-title {
-                font-size: 16px;
-                margin-bottom: 8px;
-            }
-
-            .control-desc {
-                font-size: 13px;
-                min-height: 40px;
-                margin-bottom: 15px;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-
-            .sidebar .status-card {
-                padding: 20px 15px;
-            }
-
-            .status-title {
-                font-size: 18px;
-                margin-bottom: 15px;
-            }
-
-            .status-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .status-item {
-                padding: 15px;
-                border-radius: 10px;
-            }
-
-            .status-value {
-                font-size: 24px;
-            }
-
-            .status-label {
-                font-size: 13px;
-            }
-
-            .robot-section {
-                padding: 20px 15px;
-            }
-
-            .robot-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-
-            .robot-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-
-            .robot-info h3 {
-                font-size: 18px;
-            }
-
-            .robot-controls {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                margin-top: 20px;
-            }
-
-            .robot-btn {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            .tab-bar {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                z-index: 1000;
-            }
-
-            .tab-item {
-                padding: 12px 0;
-                font-size: 12px;
-            }
-
-            .tab-item i {
-                font-size: 20px;
-                margin-bottom: 4px;
-            }
-
-            /* 深空背景移动端优化 */
-            .nebula {
-                filter: blur(30px) !important;
-            }
-
-            .galaxy {
-                width: 120px !important;
-                height: 120px !important;
-            }
-
-            .star.large {
-                width: 2px;
-                height: 2px;
-            }
-
-            .star.medium {
-                width: 1.5px;
-                height: 1.5px;
-            }
-        }
-
-        /* 响应式设计 - 小屏手机 */
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 20px 15px;
-                margin: 0 5px;
-            }
-
-            .login-header h1 {
-                font-size: 20px;
-            }
-
-            .login-logo {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-
-            .container {
-                margin: 2px;
-            }
-
-            .dashboard {
-                padding: 15px 10px;
-            }
-
-            .section {
-                padding: 15px 10px;
-            }
-
-            .shoes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-                gap: 10px;
-            }
-
-            .shoe-image {
-                height: 70px;
-                font-size: 24px;
-            }
-
-            .shoe-info {
-                padding: 10px 6px;
-            }
-
-            .shoe-name {
-                font-size: 13px;
-            }
-
-            .control-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-
-            .control-title {
-                font-size: 15px;
-            }
-
-            .control-desc {
-                font-size: 12px;
-                min-height: 35px;
             }
         }
 
         /* 登录界面样式 */
         .login-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
-            z-index: 1000;
+            position: relative;
+            overflow: hidden;
         }
 
-        .login-card {
-            background: rgba(15, 23, 42, 0.9);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .login-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
             width: 100%;
-            max-width: 400px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 品牌展示区 */
+        .brand-section {
             text-align: center;
+            padding: 40px 20px;
         }
 
-        .login-header {
-            margin-bottom: 30px;
+        .brand-logo {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
         }
 
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.15);
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            color: #FFD700;
-            margin: 0 auto 20px;
+            font-size: 48px;
+            color: #1a2a6c;
+            box-shadow: 
+                0 20px 40px rgba(255, 215, 0, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: logoFloat 6s ease-in-out infinite;
         }
 
-        .login-header h1 {
-            font-size: 32px;
+        .logo-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring {
+            position: absolute;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring-1 {
+            width: 140px;
+            height: 140px;
+            animation: ringRotate 20s linear infinite;
+        }
+
+        .ring-2 {
+            width: 160px;
+            height: 160px;
+            animation: ringRotate 15s linear infinite reverse;
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .ring-3 {
+            width: 180px;
+            height: 180px;
+            animation: ringRotate 25s linear infinite;
+            border-color: rgba(79, 195, 247, 0.1);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes ringRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .brand-title {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700, #4fc3f7, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: titleShimmer 3s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .brand-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .brand-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px;
+            background: rgba(79, 195, 247, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(79, 195, 247, 0.15);
+            box-shadow: 0 10px 25px rgba(79, 195, 247, 0.2);
+        }
+
+        .feature-item i {
+            font-size: 24px;
+            color: #4fc3f7;
+        }
+
+        .feature-item span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        /* 登录区域 */
+        .login-section {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 星空背景 */
+        .starfield-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        #starfieldCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+        }
+
+        .nebula-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 144, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(255, 20, 147, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 30% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
+            animation: nebulaFloat 20s ease-in-out infinite alternate;
+        }
+
+        .particle-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+        }
+
+        .particle.large {
+            width: 3px;
+            height: 3px;
+            background: rgba(79, 195, 247, 0.9);
+            box-shadow: 0 0 10px rgba(79, 195, 247, 0.8);
+        }
+
+        .particle.medium {
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .particle.small {
+            width: 1px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(79, 195, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(79, 195, 247, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes nebulaFloat {
+            0% {
+                transform: translateX(-10px) translateY(-5px) scale(1);
+            }
+
+            100% {
+                transform: translateX(10px) translateY(5px) scale(1.05);
+            }
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        @keyframes starTwinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0px) translateX(0px);
+            }
+
+            33% {
+                transform: translateY(-10px) translateX(5px);
+            }
+
+            66% {
+                transform: translateY(5px) translateX(-3px);
+            }
+
+            100% {
+                transform: translateY(0px) translateX(0px);
+            }
+        }
+
+        .login-card {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(79, 195, 247, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(79, 195, 247, 0.2);
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            animation: cardGlow 4s ease-in-out infinite alternate;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(79, 195, 247, 0.05) 0%, 
+                transparent 50%, 
+                rgba(255, 215, 0, 0.03) 100%);
+            border-radius: 25px;
+            pointer-events: none;
+        }
+
+        @keyframes cardGlow {
+            0% { 
+                box-shadow: 
+                    0 25px 50px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(79, 195, 247, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            100% { 
+                box-shadow: 
+                    0 25px 50px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(79, 195, 247, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(79, 195, 247, 0.15);
+            }
+        }
+
+        .login-header {
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header h2 {
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #e0f7ff;
+            background: linear-gradient(135deg, #e0f7ff, #4fc3f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .login-header p {
-            color: #a0b0ff;
-            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 300;
         }
 
         .login-form {
@@ -1689,6 +1536,447 @@
         .action-btn.danger {
             background: linear-gradient(to right, #e74c3c, #c0392b);
         }
+
+        /* 用户管理页面样式 */
+        .user-management-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f1b3a, #2c3e50);
+            z-index: 3000;
+            overflow-y: auto;
+            padding: 20px;
+            display: none;
+        }
+
+        .user-management-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: calc(100vh - 40px);
+        }
+
+        .user-management-header {
+            background: linear-gradient(to right, #1a2a6c, #3a7bd5);
+            color: white;
+            padding: 25px 40px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-management-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        .users-list-section {
+            background: rgba(30, 40, 70, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .user-form-section {
+            background: rgba(30, 40, 70, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .users-table th {
+            background: rgba(25, 35, 65, 0.7);
+            color: #e0f7ff;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .users-table td {
+            color: #a0b0ff;
+        }
+
+        .users-table tr:hover {
+            background: rgba(25, 35, 65, 0.3);
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a90e2, #1a2a6c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-role-badge {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role-admin {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+        }
+
+        .role-manager {
+            background: rgba(243, 156, 18, 0.15);
+            color: #f39c12;
+        }
+
+        .role-user {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .role-guest {
+            background: rgba(149, 165, 166, 0.15);
+            color: #95a5a6;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn-small {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn-small.edit {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .action-btn-small.delete {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .action-btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e0f7ff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(25, 35, 65, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+        }
+
+        .form-select option {
+            background: rgba(25, 35, 65, 0.9);
+            color: #fff;
+        }
+
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .permission-item {
+            background: rgba(25, 35, 65, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+        }
+
+        .permission-item:hover {
+            background: rgba(25, 35, 65, 0.9);
+        }
+
+        .permission-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #4fc3f7;
+        }
+
+        .permission-label {
+            color: #e0f7ff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .permission-desc {
+            color: #a0b0ff;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .form-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .form-btn.primary {
+            background: linear-gradient(to right, #3a7bd5, #1a2a6c);
+            color: white;
+        }
+
+        .form-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0f7ff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(25, 35, 65, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: #a0b0ff;
+        }
+
+        .filter-select {
+            padding: 12px 15px;
+            background: rgba(25, 35, 65, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            min-width: 120px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(25, 35, 65, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4fc3f7;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #a0b0ff;
+        }
+
+        /* 确认对话框样式 */
+        .confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+            backdrop-filter: blur(5px);
+        }
+
+        .confirm-dialog.show {
+            display: flex;
+        }
+
+        .confirm-card {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .confirm-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+
+        .confirm-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e0f7ff;
+            margin-bottom: 10px;
+        }
+
+        .confirm-message {
+            color: #a0b0ff;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .confirm-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .confirm-btn.danger {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .confirm-btn.cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0f7ff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
 
         .care-history {
             max-height: 300px;
@@ -3105,156 +3393,945 @@
             flex-wrap: wrap;
         }
 
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
+        /* 平板端优化 */
+        @media (max-width: 1024px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
                 gap: 20px;
-                text-align: center;
+                padding: 20px;
+            }
+
+            .sidebar {
+                order: -1;
+                /* 侧边栏移到顶部 */
+            }
+
+            .status-card {
+                padding: 20px;
+            }
+
+            .robot-section {
+                padding: 20px;
+            }
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                border-radius: 10px;
+                margin: 5px;
+            }
+
+            /* 头部优化 */
+            header {
+                padding: 15px 20px;
+                min-height: 70px;
+                flex-direction: row;
+                /* 保持水平布局 */
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo-area {
+                flex-direction: row;
+                /* 保持水平布局 */
+                gap: 8px;
+                flex: 0 0 auto;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .logo-text h1 {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .logo-text .subtitle {
+                font-size: 10px;
+                margin-top: 1px;
             }
 
             .user-info {
-                justify-content: center;
+                flex-direction: row;
+                gap: 8px;
+                flex: 0 0 auto;
+                padding-left: 0;
             }
 
+            .user-status {
+                text-align: right;
+            }
+
+            .user-status .name {
+                font-size: 14px;
+            }
+
+            .user-status .role {
+                font-size: 10px;
+                margin-top: 1px;
+            }
+
+            .avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            /* 主要内容区域 */
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .section {
+                padding: 20px 15px;
+                border-radius: 12px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            /* 鞋子网格 */
+            .shoes-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .shoe-card {
+                border-radius: 10px;
+            }
+
+            .shoe-image {
+                height: 100px;
+                font-size: 35px;
+            }
+
+            .shoe-info {
+                padding: 12px 8px;
+            }
+
+            .shoe-name {
+                font-size: 14px;
+            }
+
+            .shoe-meta {
+                font-size: 12px;
+            }
+
+            /* 控制网格 */
             .controls-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
 
-            .shoes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            .control-card {
+                padding: 15px;
+                text-align: center;
+            }
+
+            .control-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+                margin: 0 auto 15px;
+            }
+
+            .control-title {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .control-desc {
+                font-size: 13px;
+                min-height: 40px;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            /* 侧边栏优化 */
+            .sidebar {
+                gap: 15px;
+            }
+
+            .status-card {
+                padding: 20px 15px;
+            }
+
+            .status-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .status-item {
+                padding: 15px 10px;
+            }
+
+            .status-value {
+                font-size: 24px;
+            }
+
+            .status-label {
+                font-size: 12px;
+            }
+
+            /* 机器人区域 */
+            .robot-section {
+                padding: 20px 15px;
+            }
+
+            .robot-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .robot-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .robot-info h3 {
+                font-size: 18px;
+            }
+
+            .robot-info p {
+                font-size: 14px;
+            }
+
+            .robot-controls {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .robot-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            /* 标签栏优化 */
+            .tab-bar {
+                position: sticky;
+                bottom: 0;
+                z-index: 100;
+            }
+
+            .tab-item {
+                padding: 12px 0;
+                font-size: 12px;
+            }
+
+            .tab-item i {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+
+            /* 登录页面优化 */
+            .login-container {
+                padding: 10px;
             }
 
             .login-card {
-                padding: 30px 20px;
+                padding: 25px 20px;
+                border-radius: 15px;
+                max-width: 350px;
             }
 
-            .robot-status-grid {
-                grid-template-columns: 1fr;
-                padding: 20px;
+            .login-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
             }
 
-            .robot-status-header {
+            .login-header h1 {
+                font-size: 28px;
+            }
+
+            .login-header p {
+                font-size: 14px;
+            }
+
+            .input-group input {
+                padding: 12px 12px 12px 40px;
+                font-size: 14px;
+            }
+
+            .login-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            /* 各个页面的移动端优化 */
+            .robot-status-page,
+            .data-analysis-page,
+            .system-settings-page,
+            .user-management-page,
+            .shoe-detail-page {
+                padding: 10px;
+            }
+
+            .robot-status-container,
+            .data-analysis-container,
+            .system-settings-container,
+            .user-management-container,
+            .shoe-detail-container {
+                border-radius: 10px;
+                margin: 5px;
+            }
+
+            .robot-status-header,
+            .data-analysis-header,
+            .system-settings-header,
+            .user-management-header,
+            .shoe-detail-header {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
-                padding: 20px;
+                padding: 20px 15px;
             }
 
-            .status-cards {
+            .robot-status-header h1,
+            .data-analysis-header h1,
+            .system-settings-header h1,
+            .user-management-header h1,
+            .shoe-detail-header h1 {
+                font-size: 22px;
+            }
+
+            .back-btn {
+                order: -1;
+                align-self: flex-start;
+            }
+
+            /* 机器人状态页面 */
+            .robot-status-grid {
                 grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .status-section {
+                padding: 15px;
             }
 
             .work-stats {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
+            /* 数据分析页面 */
             .analysis-grid {
                 grid-template-columns: 1fr;
-                padding: 20px;
-            }
-
-            .data-analysis-header {
-                flex-direction: column;
+                padding: 15px;
                 gap: 15px;
-                text-align: center;
-                padding: 20px;
             }
 
-            .overview-cards {
-                grid-template-columns: 1fr;
-            }
-
+            .overview-cards,
             .prediction-cards {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
 
             .environment-data {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
 
+            /* 系统设置页面 */
             .settings-grid {
                 grid-template-columns: 1fr;
-                padding: 20px;
+                padding: 15px;
+                gap: 15px;
             }
 
-            .settings-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-                padding: 20px;
+            .settings-section {
+                padding: 15px;
             }
 
             .data-stats {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
-            .system-actions {
-                flex-direction: column;
-            }
-
-            .network-actions {
-                flex-direction: column;
-            }
-
-            .user-actions {
-                flex-direction: column;
-            }
-
-            .maintenance-actions {
-                flex-direction: column;
-            }
-
+            .system-actions,
+            .network-actions,
+            .user-actions,
+            .maintenance-actions,
             .data-actions {
                 flex-direction: column;
+                gap: 10px;
             }
+
+            .settings-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            /* 用户管理页面 */
+            .user-management-content {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .users-list-section,
+            .user-form-section {
+                padding: 15px;
+            }
+
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .search-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .users-table {
+                font-size: 14px;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 10px 8px;
+            }
+
+            .permissions-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* 鞋子详情页面 */
+            .shoe-detail-content {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .shoe-preview-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+
+            .shoe-title {
+                font-size: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* 模态框优化 */
+            .fragrance-modal,
+            .confirm-dialog {
+                padding: 20px;
+            }
+
+            .fragrance-card,
+            .confirm-card {
+                padding: 25px 20px;
+                border-radius: 15px;
+                max-width: 350px;
+            }
+
+            .fragrance-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .fragrance-option {
+                padding: 15px 10px;
+            }
+
+            .fragrance-controls,
+            .confirm-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* 通知优化 */
+            .notification {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                padding: 12px 15px;
+                font-size: 14px;
+                border-radius: 8px;
+            }
+        }
+
+        /* 小屏手机优化 */
+        @media (max-width: 480px) {
+
+            /* 超小屏幕头部优化 */
+            header {
+                padding: 12px 15px;
+                min-height: 60px;
+            }
+
+            .logo {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            .logo-text h1 {
+                font-size: 16px;
+                letter-spacing: 0.5px;
+            }
+
+            .logo-text .subtitle {
+                font-size: 9px;
+                display: none;
+                /* 在超小屏幕上隐藏副标题 */
+            }
+
+            .user-status .name {
+                font-size: 13px;
+            }
+
+            .user-status .role {
+                font-size: 9px;
+            }
+
+            .avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .shoes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .work-stats,
+            .data-stats,
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .fragrance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shoe-card {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+
+            .control-card {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        /* 移动端浮动操作按钮 */
+        .mobile-fab {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .fab-main {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3a7bd5, #1a2a6c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .fab-main:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .fab-main.active {
+            transform: rotate(45deg);
+        }
+
+        .fab-menu {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .fab-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .fab-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 12px 16px;
+            border-radius: 28px;
+            color: #e0f7ff;
+            font-size: 14px;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .fab-item:hover {
+            background: rgba(25, 35, 65, 0.95);
+            transform: translateX(-5px);
+        }
+
+        .fab-item i {
+            width: 20px;
+            text-align: center;
+            color: #4fc3f7;
+        }
+
+        /* 移动端标签栏优化 */
+        @media (max-width: 768px) {
+            .tab-bar {
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 8px 0;
+            }
+
+            .tab-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                padding: 8px 4px;
+                min-height: 60px;
+                transition: all 0.3s ease;
+            }
+
+            .tab-item span {
+                font-size: 11px;
+                font-weight: 500;
+            }
+
+            .tab-item.active {
+                background: rgba(79, 195, 247, 0.1);
+                border-radius: 12px;
+                margin: 0 4px;
+            }
+
+            .tab-item.active::after {
+                display: none;
+            }
+
+            .mobile-fab {
+                display: block;
+            }
+        }
+
+        /* 触摸设备优化 */
+        @media (hover: none) and (pointer: coarse) {
+
+            .btn,
+            .robot-btn,
+            .settings-btn,
+            .form-btn,
+            .action-btn,
+            .action-btn-small,
+            .tab-item,
+            .fab-main,
+            .fab-item {
+                min-height: 44px;
+                /* iOS 推荐的最小触摸目标 */
+                min-width: 44px;
+            }
+
+            .shoe-card,
+            .control-card {
+                transform: none;
+                /* 禁用 hover 效果 */
+            }
+
+            .shoe-card:active,
+            .control-card:active {
+                transform: scale(0.98);
+                transition: transform 0.1s;
+            }
+
+            .fab-main:active {
+                transform: scale(0.95);
+            }
+
+            .fab-item:active {
+                transform: scale(0.95);
+                background: rgba(25, 35, 65, 0.95);
+            }
+        }
+
+        /* 移动端状态栏 */
+        .mobile-status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            z-index: 1002;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-left .time {
+            font-weight: 600;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .network-status,
+        .battery-status {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .network-status i {
+            color: #2ecc71;
+        }
+
+        .battery-status i {
+            color: #2ecc71;
+        }
+
+        /* 移动端专用样式 */
+        .mobile-device .container {
+            border-radius: 0;
+            margin: 0;
+            min-height: 100vh;
+            margin-top: 24px;
+            /* 为状态栏留出空间 */
+        }
+
+        .mobile-device header {
+            border-radius: 0;
+        }
+
+        .mobile-device .tab-bar {
+            border-radius: 0;
+        }
+
+        /* 移动端滚动优化 */
+        .mobile-device .dashboard,
+        .mobile-device .sidebar,
+        .mobile-device .users-table,
+        .mobile-device .robot-status-grid,
+        .mobile-device .analysis-grid,
+        .mobile-device .settings-grid {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* 移动端输入框优化 */
+        .mobile-device input,
+        .mobile-device textarea,
+        .mobile-device select {
+            font-size: 16px;
+            /* 防止iOS缩放 */
+        }
+
+        /* 移动端按钮优化 */
+        .mobile-device .btn,
+        .mobile-device .robot-btn,
+        .mobile-device .settings-btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
         }
     </style>
 </head>
 
 <body>
-    <!-- 深空背景 -->
-    <div class="space-background">
-        <div class="stars-layer" id="starsLayer"></div>
-        <div class="nebula blue" style="width: 300px; height: 300px; top: 10%; left: 15%;"></div>
-        <div class="nebula purple" style="width: 250px; height: 250px; top: 60%; right: 20%;"></div>
-        <div class="nebula pink" style="width: 200px; height: 200px; top: 30%; right: 10%;"></div>
-        <div class="galaxy" style="top: 20%; left: 70%;"></div>
-        <div class="galaxy" style="top: 70%; left: 10%; width: 150px; height: 150px;"></div>
-    </div>
-
     <!-- 登录界面 -->
     <div class="login-container" id="loginContainer">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="login-logo">
-                    <i class="fas fa-shoe-prints"></i>
+        <!-- 星空背景 -->
+        <div class="starfield-background">
+            <canvas id="starfieldCanvas"></canvas>
+            <div class="nebula-layer"></div>
+            <div class="particle-layer" id="particleLayer"></div>
+            <div class="grid-overlay"></div>
+        </div>
+
+        <!-- 主登录区域 -->
+        <div class="login-main">
+            <!-- 品牌展示区 -->
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <div class="logo-circle">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <div class="logo-rings">
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                    </div>
                 </div>
-                <h1>NEW COBBLER</h1>
-                <p>智能鞋柜管理系统</p>
+                <h1 class="brand-title">NEW COBBLER</h1>
+                <p class="brand-subtitle">智能鞋柜管理系统</p>
+                <div class="brand-features">
+                    <div class="feature-item">
+                        <i class="fas fa-robot"></i>
+                        <span>AI智能管理</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>安全防护</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>移动控制</span>
+                    </div>
+                </div>
             </div>
-            <form class="login-form" id="loginForm">
-                <div class="form-group">
-                    <label for="username">账号</label>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="username" placeholder="请输入账号" required>
+
+            <!-- 登录表单区 -->
+            <div class="login-section">
+                <div class="login-card">
+                    <div class="login-header">
+                        <h2>欢迎回来</h2>
+                        <p>请登录您的账户</p>
                     </div>
+                    
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username">账号</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="username" placeholder="请输入账号" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">密码</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" placeholder="请输入密码" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">
+                            <span class="btn-text">
+                                <i class="fas fa-sign-in-alt"></i>
+                                登录
+                            </span>
+                            <div class="btn-bg"></div>
+                        </button>
+                        
+                        <div class="login-tips">
+                            <div class="tip-item">
+                                <i class="fas fa-info-circle"></i>
+                                <span>默认账号：123456789</span>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-key"></i>
+                                <span>默认密码：123456</span>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="password">密码</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" placeholder="请输入密码" required>
-                    </div>
-                </div>
-                <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> 登录
-                </button>
-                <div class="login-tips">
-                    <p>默认账号：123456789</p>
-                    <p>默认密码：123456</p>
-                </div>
-            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 移动端状态栏 -->
+    <div class="mobile-status-bar" id="mobileStatusBar" style="display: none;">
+        <div class="status-left">
+            <span class="time" id="mobileTime">12:34</span>
+        </div>
+        <div class="status-right">
+            <span class="network-status" id="networkStatus">
+                <i class="fas fa-wifi"></i>
+            </span>
+            <span class="battery-status" id="batteryStatus">
+                <i class="fas fa-battery-three-quarters"></i>
+                <span>87%</span>
+            </span>
         </div>
     </div>
 
@@ -3270,6 +4347,10 @@
                     <div class="subtitle">智能鞋柜管理系统 - 您的鞋子呵护管家</div>
                 </div>
             </div>
+
+            <!-- 中间弹性空间 -->
+            <div class="header-spacer"></div>
+
             <div class="user-info">
                 <div class="user-status">
                     <div class="name">李先生</div>
@@ -3504,17 +4585,42 @@
         </div>
 
         <div class="tab-bar">
-            <div class="tab-item active">
-                <i class="fas fa-home"></i>控制台
+            <div class="tab-item active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>控制台</span>
             </div>
-            <div class="tab-item">
-                <i class="fas fa-robot"></i>机器人
+            <div class="tab-item" data-page="robot">
+                <i class="fas fa-robot"></i>
+                <span>机器人</span>
             </div>
-            <div class="tab-item">
-                <i class="fas fa-chart-line"></i>数据分析
+            <div class="tab-item" data-page="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span>数据分析</span>
             </div>
-            <div class="tab-item">
-                <i class="fas fa-cog"></i>系统设置
+            <div class="tab-item" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>系统设置</span>
+            </div>
+        </div>
+
+        <!-- 移动端快速操作浮动按钮 -->
+        <div class="mobile-fab" id="mobileFab" style="display: none;">
+            <div class="fab-main">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="fab-menu" id="fabMenu">
+                <div class="fab-item" id="fabAddShoe">
+                    <i class="fas fa-shoe-prints"></i>
+                    <span>添加鞋子</span>
+                </div>
+                <div class="fab-item" id="fabRobot">
+                    <i class="fas fa-robot"></i>
+                    <span>召唤机器人</span>
+                </div>
+                <div class="fab-item" id="fabClean">
+                    <i class="fas fa-broom"></i>
+                    <span>开始清洁</span>
+                </div>
             </div>
         </div>
     </div>
@@ -3733,6 +4839,227 @@
             <div class="fragrance-controls">
                 <button class="fragrance-btn secondary" id="cancelFragrance">取消</button>
                 <button class="fragrance-btn primary" id="confirmFragrance">确认选择</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户管理页面 -->
+    <div class="user-management-page" id="userManagementPage">
+        <div class="user-management-container">
+            <div class="user-management-header">
+                <h1><i class="fas fa-users"></i> 用户管理</h1>
+                <button class="back-btn" id="backToMainFromUsers">
+                    <i class="fas fa-arrow-left"></i> 返回设置
+                </button>
+            </div>
+
+            <div class="user-management-content">
+                <!-- 用户列表区域 -->
+                <div class="users-list-section">
+                    <div class="section-title">
+                        <i class="fas fa-list"></i>用户列表
+                    </div>
+
+                    <!-- 统计卡片 -->
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalUsers">4</div>
+                            <div class="stat-label">总用户数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="adminUsers">1</div>
+                            <div class="stat-label">管理员</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="activeUsers">3</div>
+                            <div class="stat-label">活跃用户</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="onlineUsers">2</div>
+                            <div class="stat-label">在线用户</div>
+                        </div>
+                    </div>
+
+                    <!-- 搜索和筛选 -->
+                    <div class="search-bar">
+                        <input type="text" class="search-input" id="userSearch" placeholder="搜索用户名、邮箱或手机号...">
+                        <select class="filter-select" id="roleFilter">
+                            <option value="">所有角色</option>
+                            <option value="admin">管理员</option>
+                            <option value="manager">经理</option>
+                            <option value="user">普通用户</option>
+                            <option value="guest">访客</option>
+                        </select>
+                    </div>
+
+                    <!-- 用户表格 -->
+                    <table class="users-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>头像</th>
+                                <th>用户名</th>
+                                <th>邮箱</th>
+                                <th>角色</th>
+                                <th>状态</th>
+                                <th>最后登录</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- 用户数据将通过JavaScript动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 用户表单区域 -->
+                <div class="user-form-section">
+                    <div class="form-title">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="formTitle">添加新用户</span>
+                    </div>
+
+                    <form class="user-form" id="userForm">
+                        <div class="form-group">
+                            <label for="userName">用户名</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="userName" placeholder="请输入用户名" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userEmail">邮箱</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="userEmail" placeholder="请输入邮箱地址" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userPhone">手机号</label>
+                                <div class="input-group">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="userPhone" placeholder="请输入手机号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userRole">用户角色</label>
+                                <select class="form-select" id="userRole" required>
+                                    <option value="">请选择角色</option>
+                                    <option value="admin">管理员</option>
+                                    <option value="manager">经理</option>
+                                    <option value="user">普通用户</option>
+                                    <option value="guest">访客</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userPassword">密码</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="userPassword" placeholder="请输入密码" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>用户权限</label>
+                            <div class="permissions-grid" id="permissionsGrid">
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-dashboard"
+                                        value="dashboard">
+                                    <label for="perm-dashboard" class="permission-label">
+                                        控制台访问
+                                        <div class="permission-desc">查看系统状态和基本信息</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-shoes" value="shoes">
+                                    <label for="perm-shoes" class="permission-label">
+                                        鞋子管理
+                                        <div class="permission-desc">添加、编辑、删除鞋子信息</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-robot" value="robot">
+                                    <label for="perm-robot" class="permission-label">
+                                        机器人控制
+                                        <div class="permission-desc">控制取鞋机器人操作</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-maintenance"
+                                        value="maintenance">
+                                    <label for="perm-maintenance" class="permission-label">
+                                        设备维护
+                                        <div class="permission-desc">执行UV消毒、烘干等维护操作</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-analytics"
+                                        value="analytics">
+                                    <label for="perm-analytics" class="permission-label">
+                                        数据分析
+                                        <div class="permission-desc">查看使用统计和分析报告</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-settings"
+                                        value="settings">
+                                    <label for="perm-settings" class="permission-label">
+                                        系统设置
+                                        <div class="permission-desc">修改系统配置和参数</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-users" value="users">
+                                    <label for="perm-users" class="permission-label">
+                                        用户管理
+                                        <div class="permission-desc">管理系统用户和权限</div>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <input type="checkbox" class="permission-checkbox" id="perm-backup" value="backup">
+                                    <label for="perm-backup" class="permission-label">
+                                        数据备份
+                                        <div class="permission-desc">备份和恢复系统数据</div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="submit" class="form-btn primary" id="saveUserBtn">
+                                <i class="fas fa-save"></i> 保存用户
+                            </button>
+                            <button type="button" class="form-btn secondary" id="resetFormBtn">
+                                <i class="fas fa-undo"></i> 重置表单
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除对话框 -->
+    <div class="confirm-dialog" id="confirmDialog">
+        <div class="confirm-card">
+            <div class="confirm-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="confirm-title">确认删除用户</div>
+            <div class="confirm-message" id="confirmMessage">
+                您确定要删除用户 "<span id="deleteUserName"></span>" 吗？此操作不可撤销。
+            </div>
+            <div class="confirm-buttons">
+                <button class="confirm-btn danger" id="confirmDeleteBtn">
+                    <i class="fas fa-trash"></i> 确认删除
+                </button>
+                <button class="confirm-btn cancel" id="cancelDeleteBtn">
+                    <i class="fas fa-times"></i> 取消
+                </button>
             </div>
         </div>
     </div>
@@ -4364,11 +5691,11 @@
                             </button>
                         </div>
                         <div class="user-actions">
-                            <button class="settings-btn secondary" id="addUserBtn">
-                                <i class="fas fa-user-plus"></i> 添加用户
+                            <button class="settings-btn primary" id="openUserManagementBtn">
+                                <i class="fas fa-users-cog"></i> 用户管理
                             </button>
-                            <button class="settings-btn secondary" id="manageUsersBtn">
-                                <i class="fas fa-users-cog"></i> 用户权限
+                            <button class="settings-btn secondary" id="changePasswordBtn2">
+                                <i class="fas fa-key"></i> 修改密码
                             </button>
                         </div>
                     </div>
@@ -4572,143 +5899,169 @@
     </div>
 
     <script>
-        // 深空背景动画系统
-        class SpaceBackground {
-            constructor() {
-                this.starsLayer = document.getElementById('starsLayer');
-                this.stars = [];
-                this.meteors = [];
-                this.particles = [];
-                this.pulsars = [];
+        // 星空背景动画系统
+        function initStarfieldAnimation() {
+            const canvas = document.getElementById('starfieldCanvas');
+            const particleLayer = document.getElementById('particleLayer');
 
-                this.init();
+            if (!canvas || !particleLayer) return;
+
+            const ctx = canvas.getContext('2d');
+            let animationId;
+
+            // 设置画布尺寸
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
 
-            init() {
-                this.createStars();
-                this.createMeteors();
-                this.createParticles();
-                this.createPulsars();
-                this.animateBackground();
-                this.animateNebulas();
-                this.animateGalaxies();
-            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // 星星数组
+            const stars = [];
+            const numStars = 200;
 
             // 创建星星
-            createStars() {
-                const starCount = 200;
-
-                for (let i = 0; i < starCount; i++) {
-                    const star = document.createElement('div');
-                    star.className = 'star';
-
-                    // 随机星星大小
-                    const size = Math.random();
-                    if (size < 0.7) {
-                        star.classList.add('small');
-                    } else if (size < 0.9) {
-                        star.classList.add('medium');
-                    } else {
-                        star.classList.add('large');
-                    }
-
-                    // 随机位置
-                    star.style.left = Math.random() * 100 + '%';
-                    star.style.top = Math.random() * 100 + '%';
-
-                    // 随机透明度
-                    star.style.opacity = Math.random() * 0.8 + 0.2;
-
-                    this.starsLayer.appendChild(star);
-                    this.stars.push(star);
-
-                    // 星星闪烁动画
-                    gsap.to(star, {
-                        opacity: Math.random() * 0.5 + 0.3,
-                        duration: Math.random() * 3 + 1,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "power2.inOut",
-                        delay: Math.random() * 2
-                    });
-                }
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    speed: Math.random() * 0.5 + 0.1,
+                    opacity: Math.random() * 0.8 + 0.2,
+                    twinkleSpeed: Math.random() * 0.02 + 0.01,
+                    color: Math.random() > 0.7 ? '#4fc3f7' : '#ffffff'
+                });
             }
+
+            // 流星数组
+            const meteors = [];
 
             // 创建流星
-            createMeteors() {
-                const meteorCount = 5;
-
-                for (let i = 0; i < meteorCount; i++) {
-                    const meteor = document.createElement('div');
-                    meteor.className = 'meteor';
-                    meteor.style.left = '-50px';
-                    meteor.style.top = Math.random() * 50 + '%';
-
-                    this.starsLayer.appendChild(meteor);
-                    this.meteors.push(meteor);
-
-                    // 流星动画
-                    this.animateMeteor(meteor, i);
+            function createMeteor() {
+                if (Math.random() < 0.003) { // 低概率生成流星
+                    meteors.push({
+                        x: Math.random() * canvas.width,
+                        y: -10,
+                        length: Math.random() * 80 + 20,
+                        speed: Math.random() * 3 + 2,
+                        opacity: 1,
+                        angle: Math.random() * 30 + 15 // 15-45度角
+                    });
                 }
             }
 
-            // 流星动画
-            animateMeteor(meteor, index) {
-                const startX = -50;
-                const endX = window.innerWidth + 50;
-                const startY = Math.random() * window.innerHeight * 0.5;
-                const endY = startY + Math.random() * 200 + 100;
+            // 绘制星星
+            function drawStars() {
+                stars.forEach(star => {
+                    // 闪烁效果
+                    star.opacity += Math.sin(Date.now() * star.twinkleSpeed) * 0.01;
+                    star.opacity = Math.max(0.2, Math.min(1, star.opacity));
 
-                gsap.set(meteor, { x: startX, y: startY, opacity: 0 });
+                    ctx.save();
+                    ctx.globalAlpha = star.opacity;
+                    ctx.fillStyle = star.color;
+                    ctx.shadowBlur = star.size * 2;
+                    ctx.shadowColor = star.color;
 
-                const tl = gsap.timeline({
-                    delay: Math.random() * 10 + index * 2,
-                    repeat: -1,
-                    repeatDelay: Math.random() * 15 + 10
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // 十字星光效果（对较大的星星）
+                    if (star.size > 1.5) {
+                        ctx.strokeStyle = star.color;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(star.x - star.size * 2, star.y);
+                        ctx.lineTo(star.x + star.size * 2, star.y);
+                        ctx.moveTo(star.x, star.y - star.size * 2);
+                        ctx.lineTo(star.x, star.y + star.size * 2);
+                        ctx.stroke();
+                    }
+
+                    ctx.restore();
+
+                    // 缓慢移动
+                    star.y += star.speed;
+                    if (star.y > canvas.height + 10) {
+                        star.y = -10;
+                        star.x = Math.random() * canvas.width;
+                    }
                 });
-
-                tl.to(meteor, {
-                    opacity: 1,
-                    duration: 0.1
-                })
-                    .to(meteor, {
-                        x: endX,
-                        y: endY,
-                        duration: 1.5,
-                        ease: "power2.out"
-                    })
-                    .to(meteor, {
-                        opacity: 0,
-                        duration: 0.3
-                    });
             }
 
-            // 创建粒子
-            createParticles() {
-                const particleCount = 50;
+            // 绘制流星
+            function drawMeteors() {
+                meteors.forEach((meteor, index) => {
+                    ctx.save();
+                    ctx.globalAlpha = meteor.opacity;
 
-                for (let i = 0; i < particleCount; i++) {
+                    const gradient = ctx.createLinearGradient(
+                        meteor.x, meteor.y,
+                        meteor.x - Math.cos(meteor.angle * Math.PI / 180) * meteor.length,
+                        meteor.y - Math.sin(meteor.angle * Math.PI / 180) * meteor.length
+                    );
+                    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                    gradient.addColorStop(0.5, 'rgba(79, 195, 247, 0.8)');
+                    gradient.addColorStop(1, 'rgba(79, 195, 247, 0)');
+
+                    ctx.strokeStyle = gradient;
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
+
+                    ctx.beginPath();
+                    ctx.moveTo(meteor.x, meteor.y);
+                    ctx.lineTo(
+                        meteor.x - Math.cos(meteor.angle * Math.PI / 180) * meteor.length,
+                        meteor.y - Math.sin(meteor.angle * Math.PI / 180) * meteor.length
+                    );
+                    ctx.stroke();
+
+                    ctx.restore();
+
+                    // 移动流星
+                    meteor.x += Math.cos(meteor.angle * Math.PI / 180) * meteor.speed;
+                    meteor.y += Math.sin(meteor.angle * Math.PI / 180) * meteor.speed;
+                    meteor.opacity -= 0.01;
+
+                    // 移除消失的流星
+                    if (meteor.opacity <= 0 || meteor.y > canvas.height) {
+                        meteors.splice(index, 1);
+                    }
+                });
+            }
+
+            // 创建浮动粒子
+            function createFloatingParticles() {
+                const numParticles = 50;
+
+                for (let i = 0; i < numParticles; i++) {
                     const particle = document.createElement('div');
-                    particle.className = 'particle';
+                    particle.className = `particle ${['small', 'medium', 'large'][Math.floor(Math.random() * 3)]}`;
+
                     particle.style.left = Math.random() * 100 + '%';
                     particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 10 + 's';
+                    particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
 
-                    this.starsLayer.appendChild(particle);
-                    this.particles.push(particle);
+                    particleLayer.appendChild(particle);
 
-                    // 粒子漂浮动画
+                    // 使用GSAP创建浮动动画
                     gsap.to(particle, {
-                        x: Math.random() * 100 - 50,
-                        y: Math.random() * 100 - 50,
-                        duration: Math.random() * 20 + 10,
+                        x: (Math.random() - 0.5) * 100,
+                        y: (Math.random() - 0.5) * 100,
+                        duration: Math.random() * 10 + 5,
                         repeat: -1,
                         yoyo: true,
-                        ease: "none"
+                        ease: "sine.inOut"
                     });
 
+                    // 闪烁动画
                     gsap.to(particle, {
-                        opacity: Math.random() * 0.8 + 0.2,
-                        duration: Math.random() * 4 + 2,
+                        opacity: Math.random() * 0.5 + 0.3,
+                        duration: Math.random() * 3 + 1,
                         repeat: -1,
                         yoyo: true,
                         ease: "power2.inOut"
@@ -4716,216 +6069,525 @@
                 }
             }
 
-            // 创建脉冲星
-            createPulsars() {
-                const pulsarCount = 3;
+            // 主动画循环
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                for (let i = 0; i < pulsarCount; i++) {
-                    const pulsar = document.createElement('div');
-                    pulsar.className = 'pulsar';
-                    pulsar.style.left = Math.random() * 100 + '%';
-                    pulsar.style.top = Math.random() * 100 + '%';
+                drawStars();
+                createMeteor();
+                drawMeteors();
 
-                    this.starsLayer.appendChild(pulsar);
-                    this.pulsars.push(pulsar);
-
-                    // 脉冲动画
-                    gsap.to(pulsar, {
-                        scale: 1.5,
-                        opacity: 0.3,
-                        duration: 2,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: "power2.inOut",
-                        delay: Math.random() * 2
-                    });
-                }
+                animationId = requestAnimationFrame(animate);
             }
 
-            // 背景整体动画
-            animateBackground() {
-                // 整个星空缓慢旋转
-                gsap.to('.stars-layer', {
-                    rotation: 360,
-                    duration: 300,
-                    repeat: -1,
-                    ease: "none"
-                });
+            // 启动动画
+            createFloatingParticles();
+            animate();
 
-                // 视差效果
-                gsap.to('.star.small', {
-                    x: '+=20',
-                    duration: 60,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "none"
-                });
-
-                gsap.to('.star.medium', {
-                    x: '+=40',
-                    duration: 80,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "none"
-                });
-
-                gsap.to('.star.large', {
-                    x: '+=60',
-                    duration: 100,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "none"
-                });
-            }
-
-            // 星云动画
-            animateNebulas() {
-                gsap.to('.nebula.blue', {
-                    rotation: 360,
-                    duration: 120,
-                    repeat: -1,
-                    ease: "none"
-                });
-
-                gsap.to('.nebula.purple', {
-                    rotation: -360,
-                    duration: 150,
-                    repeat: -1,
-                    ease: "none"
-                });
-
-                gsap.to('.nebula.pink', {
-                    rotation: 360,
-                    duration: 180,
-                    repeat: -1,
-                    ease: "none"
-                });
-
-                // 星云呼吸效果
-                gsap.to('.nebula', {
-                    scale: 1.2,
-                    opacity: 0.5,
-                    duration: 8,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "power2.inOut",
-                    stagger: 2
-                });
-            }
-
-            // 星系动画
-            animateGalaxies() {
-                gsap.to('.galaxy', {
-                    rotation: 360,
-                    duration: 200,
-                    repeat: -1,
-                    ease: "none",
-                    stagger: 50
-                });
-
-                gsap.to('.galaxy', {
-                    scale: 1.1,
-                    duration: 15,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "power2.inOut",
-                    stagger: 3
-                });
-            }
-        }
-
-        // 登录界面动画增强
-        function enhanceLoginAnimation() {
+            // 登录页面元素入场动画
             const loginCard = document.querySelector('.login-card');
             const loginLogo = document.querySelector('.login-logo');
+            const loginHeader = document.querySelector('.login-header h1');
+            const loginSubtitle = document.querySelector('.login-header p');
             const formGroups = document.querySelectorAll('.form-group');
             const loginBtn = document.querySelector('.login-btn');
+            const loginTips = document.querySelector('.login-tips');
 
-            // 登录卡片入场动画
-            gsap.fromTo(loginCard,
+            // 创建动画时间线
+            const tl = gsap.timeline();
+
+            // 登录卡片入场
+            tl.fromTo(loginCard,
                 {
-                    scale: 0.8,
                     opacity: 0,
+                    scale: 0.8,
                     y: 50
                 },
                 {
-                    scale: 1,
                     opacity: 1,
+                    scale: 1,
                     y: 0,
                     duration: 1.2,
-                    ease: "back.out(1.7)",
-                    delay: 0.5
+                    ease: "back.out(1.7)"
                 }
-            );
+            )
+                // Logo旋转入场
+                .fromTo(loginLogo,
+                    {
+                        opacity: 0,
+                        rotation: -180,
+                        scale: 0.5
+                    },
+                    {
+                        opacity: 1,
+                        rotation: 0,
+                        scale: 1,
+                        duration: 1,
+                        ease: "back.out(1.7)"
+                    }, "-=0.8"
+                )
+                // 标题淡入
+                .fromTo(loginHeader,
+                    {
+                        opacity: 0,
+                        y: -20
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    }, "-=0.6"
+                )
+                // 副标题淡入
+                .fromTo(loginSubtitle,
+                    {
+                        opacity: 0,
+                        y: -10
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, "-=0.4"
+                );
 
-            // Logo 发光效果
-            gsap.to(loginLogo, {
-                boxShadow: "0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4)",
-                duration: 2,
-                repeat: -1,
-                yoyo: true,
-                ease: "power2.inOut"
+            // 表单元素依次入场
+            formGroups.forEach((group, index) => {
+                tl.fromTo(group,
+                    {
+                        opacity: 0,
+                        x: -30
+                    },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, `-=${0.4 - index * 0.1}`
+                );
             });
 
-            // 表单元素依次出现
-            gsap.fromTo(formGroups,
+            // 登录按钮入场
+            tl.fromTo(loginBtn,
                 {
-                    x: -30,
-                    opacity: 0
+                    opacity: 0,
+                    scale: 0.8
                 },
                 {
-                    x: 0,
                     opacity: 1,
-                    duration: 0.8,
-                    stagger: 0.2,
-                    delay: 1,
-                    ease: "power2.out"
-                }
-            );
+                    scale: 1,
+                    duration: 0.6,
+                    ease: "back.out(1.7)"
+                }, "-=0.3"
+            )
+                // 提示信息入场
+                .fromTo(loginTips,
+                    {
+                        opacity: 0,
+                        y: 20
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, "-=0.2"
+                );
 
-            // 登录按钮动画
-            gsap.fromTo(loginBtn,
-                {
-                    y: 20,
-                    opacity: 0
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.8,
-                    delay: 1.6,
-                    ease: "power2.out"
-                }
-            );
+            // 鼠标交互效果
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
 
-            // 按钮悬停效果增强
-            loginBtn.addEventListener('mouseenter', () => {
-                gsap.to(loginBtn, {
-                    scale: 1.05,
-                    boxShadow: "0 8px 25px rgba(58, 123, 213, 0.6)",
-                    duration: 0.3,
-                    ease: "power2.out"
+                // 在鼠标附近创建光晕效果
+                if (Math.random() < 0.1) {
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.left = mouseX + 'px';
+                    ripple.style.top = mouseY + 'px';
+                    ripple.style.width = '4px';
+                    ripple.style.height = '4px';
+                    ripple.style.background = 'rgba(79, 195, 247, 0.6)';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.pointerEvents = 'none';
+                    ripple.style.zIndex = '5';
+
+                    canvas.parentNode.appendChild(ripple);
+
+                    gsap.to(ripple, {
+                        scale: 10,
+                        opacity: 0,
+                        duration: 2,
+                        ease: "power2.out",
+                        onComplete: () => ripple.remove()
+                    });
+                }
+            });
+
+            // 清理函数
+            return () => {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+                window.removeEventListener('resize', resizeCanvas);
+            };
+        }
+
+        // 移动端检测和优化
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                window.innerWidth <= 768;
+        }
+
+        // 移动端初始化
+        function initMobileOptimizations() {
+            if (isMobile()) {
+                // 添加移动端专用类
+                document.body.classList.add('mobile-device');
+
+                // 显示移动端状态栏
+                const mobileStatusBar = document.getElementById('mobileStatusBar');
+                if (mobileStatusBar) {
+                    mobileStatusBar.style.display = 'flex';
+                    updateMobileStatusBar();
+                }
+
+                // 禁用双击缩放
+                document.addEventListener('touchstart', function (e) {
+                    if (e.touches.length > 1) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+
+                let lastTouchEnd = 0;
+                document.addEventListener('touchend', function (e) {
+                    const now = (new Date()).getTime();
+                    if (now - lastTouchEnd <= 300) {
+                        e.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }, false);
+
+                // 添加触摸反馈
+                const touchElements = document.querySelectorAll('.btn, .control-card, .shoe-card, .tab-item, .robot-btn');
+                touchElements.forEach(element => {
+                    element.addEventListener('touchstart', function () {
+                        this.style.transform = 'scale(0.95)';
+                        this.style.transition = 'transform 0.1s';
+                    }, { passive: true });
+
+                    element.addEventListener('touchend', function () {
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 100);
+                    }, { passive: true });
+                });
+
+                // 优化滚动性能
+                const scrollElements = document.querySelectorAll('.dashboard, .sidebar, .users-table');
+                scrollElements.forEach(element => {
+                    element.style.webkitOverflowScrolling = 'touch';
+                });
+            }
+        }
+
+        // 响应式布局调整
+        function adjustLayoutForScreen() {
+            const screenWidth = window.innerWidth;
+            const dashboard = document.querySelector('.dashboard');
+            const sidebar = document.querySelector('.sidebar');
+
+            if (screenWidth <= 768 && dashboard && sidebar) {
+                // 移动端：侧边栏移到主内容上方
+                if (sidebar.parentNode === dashboard) {
+                    dashboard.insertBefore(sidebar, dashboard.firstChild);
+                }
+            }
+        }
+
+        // 窗口大小变化监听
+        window.addEventListener('resize', function () {
+            adjustLayoutForScreen();
+
+            // 重新检测是否为移动设备
+            if (isMobile() && !document.body.classList.contains('mobile-device')) {
+                initMobileOptimizations();
+            }
+        });
+
+        // 移动端手势支持
+        function addSwipeSupport() {
+            let startX, startY, distX, distY;
+            const threshold = 100; // 最小滑动距离
+            const restraint = 100; // 最大垂直偏移
+            const allowedTime = 300; // 最大滑动时间
+
+            document.addEventListener('touchstart', function (e) {
+                const touchobj = e.changedTouches[0];
+                startX = touchobj.pageX;
+                startY = touchobj.pageY;
+                startTime = new Date().getTime();
+            }, { passive: true });
+
+            document.addEventListener('touchend', function (e) {
+                const touchobj = e.changedTouches[0];
+                distX = touchobj.pageX - startX;
+                distY = touchobj.pageY - startY;
+                const elapsedTime = new Date().getTime() - startTime;
+
+                // 检测左右滑动
+                if (elapsedTime <= allowedTime && Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
+                    const tabItems = document.querySelectorAll('.tab-item');
+                    const activeTab = document.querySelector('.tab-item.active');
+                    const activeIndex = Array.from(tabItems).indexOf(activeTab);
+
+                    if (distX > 0 && activeIndex > 0) {
+                        // 右滑：切换到上一个标签
+                        tabItems[activeIndex - 1].click();
+                    } else if (distX < 0 && activeIndex < tabItems.length - 1) {
+                        // 左滑：切换到下一个标签
+                        tabItems[activeIndex + 1].click();
+                    }
+                }
+            }, { passive: true });
+        }
+
+        // 移动端键盘处理
+        function handleMobileKeyboard() {
+            if (isMobile()) {
+                const inputs = document.querySelectorAll('input, textarea');
+
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function () {
+                        // 键盘弹出时调整视图
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    });
+
+                    input.addEventListener('blur', function () {
+                        // 键盘收起时恢复视图
+                        setTimeout(() => {
+                            window.scrollTo(0, 0);
+                        }, 300);
+                    });
+                });
+            }
+        }
+
+        // 移动端下拉刷新
+        function addPullToRefresh() {
+            if (!isMobile()) return;
+
+            let startY = 0;
+            let currentY = 0;
+            let pullDistance = 0;
+            let isPulling = false;
+            const threshold = 80;
+
+            const refreshIndicator = document.createElement('div');
+            refreshIndicator.className = 'pull-refresh-indicator';
+            refreshIndicator.innerHTML = '<i class="fas fa-arrow-down"></i><span>下拉刷新</span>';
+            refreshIndicator.style.cssText = `
+                position: fixed;
+                top: -60px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(15, 23, 42, 0.9);
+                color: #4fc3f7;
+                padding: 10px 20px;
+                border-radius: 20px;
+                font-size: 14px;
+                z-index: 1001;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            `;
+            document.body.appendChild(refreshIndicator);
+
+            document.addEventListener('touchstart', function (e) {
+                if (window.scrollY === 0) {
+                    startY = e.touches[0].clientY;
+                    isPulling = true;
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchmove', function (e) {
+                if (!isPulling) return;
+
+                currentY = e.touches[0].clientY;
+                pullDistance = currentY - startY;
+
+                if (pullDistance > 0 && pullDistance < 150) {
+                    refreshIndicator.style.top = Math.min(pullDistance - 60, 10) + 'px';
+
+                    if (pullDistance > threshold) {
+                        refreshIndicator.innerHTML = '<i class="fas fa-arrow-up"></i><span>释放刷新</span>';
+                        refreshIndicator.style.color = '#2ecc71';
+                    } else {
+                        refreshIndicator.innerHTML = '<i class="fas fa-arrow-down"></i><span>下拉刷新</span>';
+                        refreshIndicator.style.color = '#4fc3f7';
+                    }
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchend', function (e) {
+                if (!isPulling) return;
+
+                isPulling = false;
+
+                if (pullDistance > threshold) {
+                    refreshIndicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>刷新中...</span>';
+                    refreshIndicator.style.top = '10px';
+                    refreshIndicator.style.color = '#f39c12';
+
+                    // 模拟刷新
+                    setTimeout(() => {
+                        // 刷新数据
+                        const tempElement = document.getElementById('tempValue');
+                        const humidityElement = document.getElementById('humidityValue');
+
+                        if (tempElement && humidityElement) {
+                            const temp = (Math.random() * 3 + 23).toFixed(1);
+                            const humidity = Math.floor(Math.random() * 10 + 40);
+                            tempElement.textContent = `${temp}°C`;
+                            humidityElement.textContent = `${humidity}%`;
+                        }
+
+                        refreshIndicator.innerHTML = '<i class="fas fa-check"></i><span>刷新完成</span>';
+                        refreshIndicator.style.color = '#2ecc71';
+
+                        setTimeout(() => {
+                            refreshIndicator.style.top = '-60px';
+                        }, 1000);
+                    }, 1500);
+                } else {
+                    refreshIndicator.style.top = '-60px';
+                }
+
+                pullDistance = 0;
+            }, { passive: true });
+        }
+
+        // 更新移动端状态栏
+        function updateMobileStatusBar() {
+            if (!isMobile()) return;
+
+            const mobileTime = document.getElementById('mobileTime');
+            const networkStatus = document.getElementById('networkStatus');
+            const batteryStatus = document.getElementById('batteryStatus');
+
+            // 更新时间
+            function updateTime() {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('zh-CN', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                if (mobileTime) {
+                    mobileTime.textContent = timeStr;
+                }
+            }
+
+            // 更新网络状态
+            function updateNetworkStatus() {
+                if (networkStatus) {
+                    if (navigator.onLine) {
+                        networkStatus.innerHTML = '<i class="fas fa-wifi" style="color: #2ecc71;"></i>';
+                    } else {
+                        networkStatus.innerHTML = '<i class="fas fa-wifi-slash" style="color: #e74c3c;"></i>';
+                    }
+                }
+            }
+
+            // 更新电池状态（模拟）
+            function updateBatteryStatus() {
+                if (batteryStatus) {
+                    const battery = Math.floor(Math.random() * 20 + 80); // 80-100%
+                    let icon = 'fas fa-battery-full';
+                    let color = '#2ecc71';
+
+                    if (battery < 20) {
+                        icon = 'fas fa-battery-empty';
+                        color = '#e74c3c';
+                    } else if (battery < 50) {
+                        icon = 'fas fa-battery-half';
+                        color = '#f39c12';
+                    } else if (battery < 80) {
+                        icon = 'fas fa-battery-three-quarters';
+                        color = '#f39c12';
+                    }
+
+                    batteryStatus.innerHTML = `
+                        <i class="${icon}" style="color: ${color};"></i>
+                        <span>${battery}%</span>
+                    `;
+                }
+            }
+
+            // 初始更新
+            updateTime();
+            updateNetworkStatus();
+            updateBatteryStatus();
+
+            // 定时更新
+            setInterval(updateTime, 1000);
+            setInterval(updateBatteryStatus, 30000);
+
+            // 网络状态变化监听
+            window.addEventListener('online', updateNetworkStatus);
+            window.addEventListener('offline', updateNetworkStatus);
+        }
+
+        // 移动端震动反馈
+        function vibrate(pattern = [10]) {
+            if (isMobile() && 'vibrate' in navigator) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        // 为按钮添加震动反馈
+        function addVibrateToButtons() {
+            if (!isMobile()) return;
+
+            const buttons = document.querySelectorAll('.btn, .robot-btn, .settings-btn, .form-btn, .tab-item, .fab-main, .fab-item');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    vibrate([10]); // 轻微震动
                 });
             });
 
-            loginBtn.addEventListener('mouseleave', () => {
-                gsap.to(loginBtn, {
-                    scale: 1,
-                    boxShadow: "0 6px 15px rgba(0, 100, 255, 0.4)",
-                    duration: 0.3,
-                    ease: "power2.out"
+            // 为重要操作添加更强的震动
+            const importantButtons = document.querySelectorAll('.action-btn-small.delete, .confirm-btn.danger');
+            importantButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    vibrate([20, 10, 20]); // 双重震动
                 });
             });
         }
 
-        // 初始化深空背景
-        document.addEventListener('DOMContentLoaded', function () {
-            new SpaceBackground();
-            enhanceLoginAnimation();
-        });
-
         // 登录功能
         document.addEventListener('DOMContentLoaded', function () {
+            // 初始化星空背景动画
+            initStarfieldAnimation();
+
+            // 初始化移动端优化
+            initMobileOptimizations();
+            adjustLayoutForScreen();
+            addSwipeSupport();
+            handleMobileKeyboard();
+            addPullToRefresh();
+
+            // 延迟添加震动反馈，确保所有元素都已加载
+            setTimeout(() => {
+                addVibrateToButtons();
+            }, 1000);
             const loginForm = document.getElementById('loginForm');
             const loginContainer = document.getElementById('loginContainer');
             const mainContainer = document.getElementById('mainContainer');
@@ -4940,16 +6602,45 @@
 
                 // 验证账号密码
                 if (username === '123456789' && password === '123456') {
-                    // 登录成功 - 隐藏登录界面和深空背景
-                    loginContainer.style.display = 'none';
-                    document.querySelector('.space-background').style.display = 'none';
-                    mainContainer.style.display = 'block';
+                    // 登录成功动画
+                    const loginCard = document.querySelector('.login-card');
+                    const loginBtn = document.querySelector('.login-btn');
 
-                    // 恢复body的原始背景
-                    document.body.style.background = 'linear-gradient(135deg, #0f1b3a, #2c3e50)';
+                    // 按钮成功状态
+                    loginBtn.innerHTML = '<i class="fas fa-check"></i> 登录成功';
+                    loginBtn.style.background = 'linear-gradient(to right, #2ecc71, #27ae60)';
 
-                    // 初始化主应用功能
-                    initMainApp();
+                    // 卡片缩放消失动画
+                    gsap.to(loginCard, {
+                        scale: 0.8,
+                        opacity: 0,
+                        y: -50,
+                        duration: 0.8,
+                        ease: "back.in(1.7)",
+                        onComplete: () => {
+                            loginContainer.style.display = 'none';
+                            mainContainer.style.display = 'block';
+
+                            // 主界面入场动画
+                            gsap.fromTo(mainContainer,
+                                { opacity: 0, scale: 0.9 },
+                                { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+                            );
+
+                            // 初始化主应用功能
+                            initMainApp();
+                        }
+                    });
+
+                    // 星空背景加速效果
+                    const starfieldCanvas = document.getElementById('starfieldCanvas');
+                    if (starfieldCanvas) {
+                        gsap.to(starfieldCanvas.parentNode, {
+                            opacity: 0,
+                            duration: 1,
+                            delay: 0.5
+                        });
+                    }
 
                     // 显示欢迎通知
                     setTimeout(() => {
@@ -4958,9 +6649,37 @@
                         setTimeout(() => {
                             notification.classList.remove('show');
                         }, 3000);
-                    }, 500);
+                    }, 1000);
                 } else {
-                    // 登录失败
+                    // 登录失败动画
+                    const loginCard = document.querySelector('.login-card');
+                    const loginBtn = document.querySelector('.login-btn');
+
+                    // 卡片震动效果
+                    gsap.to(loginCard, {
+                        x: -10,
+                        duration: 0.1,
+                        yoyo: true,
+                        repeat: 5,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            gsap.set(loginCard, { x: 0 });
+                        }
+                    });
+
+                    // 按钮错误状态
+                    const originalBtnContent = loginBtn.innerHTML;
+                    const originalBtnStyle = loginBtn.style.background;
+
+                    loginBtn.innerHTML = '<i class="fas fa-times"></i> 登录失败';
+                    loginBtn.style.background = 'linear-gradient(to right, #e74c3c, #c0392b)';
+
+                    setTimeout(() => {
+                        loginBtn.innerHTML = originalBtnContent;
+                        loginBtn.style.background = originalBtnStyle;
+                    }, 2000);
+
+                    // 错误消息动画
                     let errorMsg = document.querySelector('.error-message');
                     if (!errorMsg) {
                         errorMsg = document.createElement('div');
@@ -4969,6 +6688,12 @@
                     }
                     errorMsg.textContent = '账号或密码错误，请重试！';
                     errorMsg.style.display = 'block';
+
+                    // 错误消息入场动画
+                    gsap.fromTo(errorMsg,
+                        { opacity: 0, y: -10 },
+                        { opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.7)" }
+                    );
 
                     // 清空输入框
                     document.getElementById('password').value = '';
@@ -4980,25 +6705,166 @@
                 }
             });
 
-            // 输入框获得焦点时隐藏错误信息
-            document.getElementById('username').addEventListener('focus', function () {
+            // 输入框动画效果
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+
+            // 用户名输入框
+            usernameInput.addEventListener('focus', function () {
                 const errorMsg = document.querySelector('.error-message');
                 if (errorMsg) {
-                    errorMsg.style.display = 'none';
+                    gsap.to(errorMsg, {
+                        opacity: 0,
+                        y: -10,
+                        duration: 0.3,
+                        onComplete: () => errorMsg.style.display = 'none'
+                    });
                 }
+
+                // 输入框发光效果
+                gsap.to(this.parentNode, {
+                    boxShadow: '0 0 20px rgba(79, 195, 247, 0.3)',
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
             });
 
-            document.getElementById('password').addEventListener('focus', function () {
+            usernameInput.addEventListener('blur', function () {
+                gsap.to(this.parentNode, {
+                    boxShadow: '0 0 0 rgba(79, 195, 247, 0)',
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            // 密码输入框
+            passwordInput.addEventListener('focus', function () {
                 const errorMsg = document.querySelector('.error-message');
                 if (errorMsg) {
-                    errorMsg.style.display = 'none';
+                    gsap.to(errorMsg, {
+                        opacity: 0,
+                        y: -10,
+                        duration: 0.3,
+                        onComplete: () => errorMsg.style.display = 'none'
+                    });
                 }
+
+                // 输入框发光效果
+                gsap.to(this.parentNode, {
+                    boxShadow: '0 0 20px rgba(79, 195, 247, 0.3)',
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            passwordInput.addEventListener('blur', function () {
+                gsap.to(this.parentNode, {
+                    boxShadow: '0 0 0 rgba(79, 195, 247, 0)',
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            // 输入框打字动画效果
+            [usernameInput, passwordInput].forEach(input => {
+                input.addEventListener('input', function () {
+                    if (this.value.length === 1) {
+                        // 第一个字符时的动画
+                        gsap.fromTo(this,
+                            { scale: 1.02 },
+                            { scale: 1, duration: 0.2, ease: "back.out(1.7)" }
+                        );
+                    }
+                });
             });
         });
 
         // 主应用初始化（登录成功后自动执行）
         function initMainApp() {
             const notification = document.getElementById('notification');
+
+            // 移动端特定初始化
+            if (isMobile()) {
+                // 重新应用触摸优化到动态生成的元素
+                setTimeout(() => {
+                    initMobileOptimizations();
+                }, 100);
+
+                // 移动端标签栏固定在底部
+                const tabBar = document.querySelector('.tab-bar');
+                if (tabBar) {
+                    tabBar.style.position = 'fixed';
+                    tabBar.style.bottom = '0';
+                    tabBar.style.left = '0';
+                    tabBar.style.right = '0';
+                    tabBar.style.zIndex = '1000';
+
+                    // 为主内容添加底部边距，避免被标签栏遮挡
+                    const mainContent = document.querySelector('.main-content');
+                    if (mainContent) {
+                        mainContent.style.paddingBottom = '80px';
+                    }
+                }
+
+                // 移动端通知位置调整
+                if (notification) {
+                    notification.style.position = 'fixed';
+                    notification.style.top = '10px';
+                    notification.style.left = '10px';
+                    notification.style.right = '10px';
+                    notification.style.maxWidth = 'none';
+                }
+
+                // 初始化移动端浮动按钮
+                initMobileFAB();
+            }
+
+            // 移动端浮动按钮功能
+            function initMobileFAB() {
+                const mobileFab = document.getElementById('mobileFab');
+                const fabMain = document.querySelector('.fab-main');
+                const fabMenu = document.getElementById('fabMenu');
+                const fabAddShoe = document.getElementById('fabAddShoe');
+                const fabRobot = document.getElementById('fabRobot');
+                const fabClean = document.getElementById('fabClean');
+
+                if (!isMobile() || !mobileFab) return;
+
+                mobileFab.style.display = 'block';
+
+                // 浮动按钮主按钮点击
+                fabMain.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    fabMenu.classList.toggle('show');
+                });
+
+                // 点击其他地方关闭菜单
+                document.addEventListener('click', function (e) {
+                    if (!mobileFab.contains(e.target)) {
+                        fabMain.classList.remove('active');
+                        fabMenu.classList.remove('show');
+                    }
+                });
+
+                // 浮动按钮功能
+                fabAddShoe.addEventListener('click', function () {
+                    document.getElementById('addShoeBtn').click();
+                    fabMain.classList.remove('active');
+                    fabMenu.classList.remove('show');
+                });
+
+                fabRobot.addEventListener('click', function () {
+                    document.getElementById('robotBtn').click();
+                    fabMain.classList.remove('active');
+                    fabMenu.classList.remove('show');
+                });
+
+                fabClean.addEventListener('click', function () {
+                    document.getElementById('uvBtn').click();
+                    fabMain.classList.remove('active');
+                    fabMenu.classList.remove('show');
+                });
+            }
 
             // 控制按钮交互
             const uvBtn = document.getElementById('uvBtn');
@@ -5507,6 +7373,7 @@
             tabItems.forEach((tab, index) => {
                 tab.addEventListener('click', function () {
                     const tabName = this.textContent.trim();
+                    const pageName = this.dataset.page;
 
                     // 如果点击的是机器人标签
                     if (tabName === '机器人') {
@@ -5893,6 +7760,23 @@
                     }, 2000);
                 });
 
+                // 用户管理按钮
+                const openUserManagementBtn = document.getElementById('openUserManagementBtn');
+                openUserManagementBtn.addEventListener('click', function () {
+                    // 隐藏系统设置页面，显示用户管理页面
+                    systemSettingsPage.style.display = 'none';
+                    document.getElementById('userManagementPage').style.display = 'block';
+
+                    // 初始化用户管理页面
+                    initUserManagementPage();
+
+                    notification.innerHTML = '<i class="fas fa-users"></i> 正在加载用户管理界面...';
+                    notification.className = 'notification show info';
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 2000);
+                });
+
                 // 系统控制按钮
                 const restartBtn = document.getElementById('restartBtn');
                 const shutdownBtn = document.getElementById('shutdownBtn');
@@ -6013,6 +7897,288 @@
             }
         } // 结束 initMainApp 函数
 
+        // 用户管理功能
+        function initUserManagementPage() {
+            const userManagementPage = document.getElementById('userManagementPage');
+            const backBtn = document.getElementById('backToMainFromUsers');
+            const userForm = document.getElementById('userForm');
+            const usersTableBody = document.getElementById('usersTableBody');
+            const userSearch = document.getElementById('userSearch');
+            const roleFilter = document.getElementById('roleFilter');
+            const confirmDialog = document.getElementById('confirmDialog');
+
+            let currentEditingUserId = null;
+            let users = [
+                {
+                    id: 1,
+                    username: '李先生',
+                    email: 'li@example.com',
+                    phone: '13800138001',
+                    role: 'admin',
+                    status: 'online',
+                    lastLogin: '2024-01-15 14:25',
+                    permissions: ['dashboard', 'shoes', 'robot', 'maintenance', 'analytics', 'settings', 'users', 'backup']
+                },
+                {
+                    id: 2,
+                    username: '张经理',
+                    email: 'zhang@example.com',
+                    phone: '13800138002',
+                    role: 'manager',
+                    status: 'online',
+                    lastLogin: '2024-01-15 13:45',
+                    permissions: ['dashboard', 'shoes', 'robot', 'maintenance', 'analytics']
+                },
+                {
+                    id: 3,
+                    username: '王用户',
+                    email: 'wang@example.com',
+                    phone: '13800138003',
+                    role: 'user',
+                    status: 'offline',
+                    lastLogin: '2024-01-14 16:30',
+                    permissions: ['dashboard', 'shoes']
+                },
+                {
+                    id: 4,
+                    username: '访客001',
+                    email: 'guest@example.com',
+                    phone: '',
+                    role: 'guest',
+                    status: 'offline',
+                    lastLogin: '2024-01-13 10:15',
+                    permissions: ['dashboard']
+                }
+            ];
+
+            // 返回设置页面
+            backBtn.addEventListener('click', function () {
+                userManagementPage.style.display = 'none';
+                document.getElementById('systemSettingsPage').style.display = 'block';
+            });
+
+            // 渲染用户表格
+            function renderUsersTable(usersToRender = users) {
+                usersTableBody.innerHTML = '';
+
+                usersToRender.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div class="user-avatar-small">${user.username.charAt(0)}</div>
+                        </td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>
+                            <span class="user-role-badge role-${user.role}">
+                                ${getRoleDisplayName(user.role)}
+                            </span>
+                        </td>
+                        <td>
+                            <span style="color: ${user.status === 'online' ? '#2ecc71' : '#95a5a6'}">
+                                ${user.status === 'online' ? '在线' : '离线'}
+                            </span>
+                        </td>
+                        <td>${user.lastLogin}</td>
+                        <td>
+                            <div class="user-actions">
+                                <button class="action-btn-small edit" onclick="editUser(${user.id})">
+                                    <i class="fas fa-edit"></i> 编辑
+                                </button>
+                                <button class="action-btn-small delete" onclick="deleteUser(${user.id}, '${user.username}')">
+                                    <i class="fas fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    usersTableBody.appendChild(row);
+                });
+
+                updateUserStats();
+            }
+
+            // 获取角色显示名称
+            function getRoleDisplayName(role) {
+                const roleNames = {
+                    'admin': '管理员',
+                    'manager': '经理',
+                    'user': '普通用户',
+                    'guest': '访客'
+                };
+                return roleNames[role] || role;
+            }
+
+            // 更新用户统计
+            function updateUserStats() {
+                document.getElementById('totalUsers').textContent = users.length;
+                document.getElementById('adminUsers').textContent = users.filter(u => u.role === 'admin').length;
+                document.getElementById('activeUsers').textContent = users.filter(u => u.status === 'online').length;
+                document.getElementById('onlineUsers').textContent = users.filter(u => u.status === 'online').length;
+            }
+
+            // 搜索用户
+            userSearch.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                const filteredUsers = users.filter(user =>
+                    user.username.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm) ||
+                    user.phone.includes(searchTerm)
+                );
+                renderUsersTable(filteredUsers);
+            });
+
+            // 角色筛选
+            roleFilter.addEventListener('change', function () {
+                const selectedRole = this.value;
+                const filteredUsers = selectedRole ?
+                    users.filter(user => user.role === selectedRole) :
+                    users;
+                renderUsersTable(filteredUsers);
+            });
+
+            // 编辑用户
+            window.editUser = function (userId) {
+                const user = users.find(u => u.id === userId);
+                if (!user) return;
+
+                currentEditingUserId = userId;
+
+                // 填充表单
+                document.getElementById('userName').value = user.username;
+                document.getElementById('userEmail').value = user.email;
+                document.getElementById('userPhone').value = user.phone;
+                document.getElementById('userRole').value = user.role;
+                document.getElementById('userPassword').value = ''; // 不显示密码
+
+                // 设置权限复选框
+                const checkboxes = document.querySelectorAll('.permission-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = user.permissions.includes(checkbox.value);
+                });
+
+                // 更新表单标题
+                document.getElementById('formTitle').textContent = '编辑用户';
+                document.getElementById('saveUserBtn').innerHTML = '<i class="fas fa-save"></i> 更新用户';
+
+                // 滚动到表单
+                document.querySelector('.user-form-section').scrollIntoView({ behavior: 'smooth' });
+            };
+
+            // 删除用户
+            window.deleteUser = function (userId, username) {
+                document.getElementById('deleteUserName').textContent = username;
+                confirmDialog.classList.add('show');
+
+                // 确认删除
+                document.getElementById('confirmDeleteBtn').onclick = function () {
+                    users = users.filter(u => u.id !== userId);
+                    renderUsersTable();
+                    confirmDialog.classList.remove('show');
+
+                    notification.innerHTML = `<i class="fas fa-trash"></i> 用户 "${username}" 已删除`;
+                    notification.className = 'notification show';
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000);
+                };
+            };
+
+            // 取消删除
+            document.getElementById('cancelDeleteBtn').addEventListener('click', function () {
+                confirmDialog.classList.remove('show');
+            });
+
+            // 表单提交
+            userForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    username: document.getElementById('userName').value,
+                    email: document.getElementById('userEmail').value,
+                    phone: document.getElementById('userPhone').value,
+                    role: document.getElementById('userRole').value,
+                    password: document.getElementById('userPassword').value,
+                    permissions: Array.from(document.querySelectorAll('.permission-checkbox:checked')).map(cb => cb.value)
+                };
+
+                if (currentEditingUserId) {
+                    // 更新用户
+                    const userIndex = users.findIndex(u => u.id === currentEditingUserId);
+                    if (userIndex !== -1) {
+                        users[userIndex] = {
+                            ...users[userIndex],
+                            ...formData,
+                            id: currentEditingUserId
+                        };
+
+                        notification.innerHTML = `<i class="fas fa-check"></i> 用户 "${formData.username}" 已更新`;
+                        notification.className = 'notification show';
+                    }
+                } else {
+                    // 添加新用户
+                    const newUser = {
+                        id: Math.max(...users.map(u => u.id)) + 1,
+                        ...formData,
+                        status: 'offline',
+                        lastLogin: '从未登录'
+                    };
+
+                    users.push(newUser);
+
+                    notification.innerHTML = `<i class="fas fa-user-plus"></i> 用户 "${formData.username}" 已添加`;
+                    notification.className = 'notification show';
+                }
+
+                // 重置表单
+                resetForm();
+                renderUsersTable();
+
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            });
+
+            // 重置表单
+            function resetForm() {
+                userForm.reset();
+                currentEditingUserId = null;
+                document.getElementById('formTitle').textContent = '添加新用户';
+                document.getElementById('saveUserBtn').innerHTML = '<i class="fas fa-save"></i> 保存用户';
+
+                // 清除权限复选框
+                document.querySelectorAll('.permission-checkbox').forEach(cb => cb.checked = false);
+            }
+
+            // 重置表单按钮
+            document.getElementById('resetFormBtn').addEventListener('click', resetForm);
+
+            // 角色变更时自动设置权限
+            document.getElementById('userRole').addEventListener('change', function () {
+                const role = this.value;
+                const checkboxes = document.querySelectorAll('.permission-checkbox');
+
+                // 清除所有权限
+                checkboxes.forEach(cb => cb.checked = false);
+
+                // 根据角色设置默认权限
+                const defaultPermissions = {
+                    'admin': ['dashboard', 'shoes', 'robot', 'maintenance', 'analytics', 'settings', 'users', 'backup'],
+                    'manager': ['dashboard', 'shoes', 'robot', 'maintenance', 'analytics'],
+                    'user': ['dashboard', 'shoes'],
+                    'guest': ['dashboard']
+                };
+
+                if (defaultPermissions[role]) {
+                    defaultPermissions[role].forEach(permission => {
+                        const checkbox = document.getElementById(`perm-${permission}`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+            });
+
+            // 初始化页面
+            renderUsersTable();
+        }
 
     </script>
 </body>
