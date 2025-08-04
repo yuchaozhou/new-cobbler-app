@@ -700,7 +700,7 @@
             justify-content: center;
             font-size: 48px;
             color: #1a2a6c;
-            box-shadow: 
+            box-shadow:
                 0 20px 40px rgba(255, 215, 0, 0.3),
                 inset 0 2px 0 rgba(255, 255, 255, 0.3);
             position: relative;
@@ -745,13 +745,25 @@
         }
 
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         @keyframes ringRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
         .brand-title {
@@ -768,8 +780,15 @@
         }
 
         @keyframes titleShimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .brand-subtitle {
@@ -965,7 +984,7 @@
             background: rgba(15, 23, 42, 0.9);
             border-radius: 25px;
             padding: 40px;
-            box-shadow: 
+            box-shadow:
                 0 25px 50px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(79, 195, 247, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -984,23 +1003,24 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, 
-                rgba(79, 195, 247, 0.05) 0%, 
-                transparent 50%, 
-                rgba(255, 215, 0, 0.03) 100%);
+            background: linear-gradient(135deg,
+                    rgba(79, 195, 247, 0.05) 0%,
+                    transparent 50%,
+                    rgba(255, 215, 0, 0.03) 100%);
             border-radius: 25px;
             pointer-events: none;
         }
 
         @keyframes cardGlow {
-            0% { 
-                box-shadow: 
+            0% {
+                box-shadow:
                     0 25px 50px rgba(0, 0, 0, 0.5),
                     0 0 0 1px rgba(79, 195, 247, 0.15),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1);
             }
-            100% { 
-                box-shadow: 
+
+            100% {
+                box-shadow:
                     0 25px 50px rgba(0, 0, 0, 0.5),
                     0 0 0 1px rgba(79, 195, 247, 0.3),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -1083,23 +1103,48 @@
 
         .login-btn {
             width: 100%;
-            background: linear-gradient(to right, #3a7bd5, #1a2a6c);
+            background: linear-gradient(135deg, #3a7bd5, #1a2a6c);
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 15px 20px;
+            border-radius: 12px;
             font-weight: 600;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+        }
+
+        .login-btn .btn-text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-btn .btn-bg {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4fc3f7, #3a7bd5);
+            transition: left 0.3s ease;
+            z-index: 1;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 100, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(58, 123, 213, 0.4);
+        }
+
+        .login-btn:hover .btn-bg {
+            left: 0;
         }
 
         .login-btn:active {
@@ -1107,18 +1152,33 @@
         }
 
         .login-tips {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(30, 144, 255, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(30, 144, 255, 0.2);
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(79, 195, 247, 0.08);
+            border-radius: 15px;
+            border: 1px solid rgba(79, 195, 247, 0.15);
+            backdrop-filter: blur(10px);
         }
 
-        .login-tips p {
-            margin: 5px 0;
+        .tip-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 8px 0;
+        }
+
+        .tip-item i {
             color: #4fc3f7;
             font-size: 14px;
+            width: 16px;
             text-align: center;
+        }
+
+        .tip-item span {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            font-weight: 400;
         }
 
         .error-message {
@@ -3418,6 +3478,40 @@
             .robot-section {
                 padding: 20px;
             }
+
+            /* 平板端登录页面优化 */
+            .login-main {
+                gap: 40px;
+                max-width: 900px;
+            }
+
+            .brand-section {
+                padding: 30px 15px;
+            }
+
+            .logo-circle {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+
+            .brand-title {
+                font-size: 40px;
+            }
+
+            .brand-subtitle {
+                font-size: 16px;
+            }
+
+            .feature-item {
+                padding: 18px 15px;
+                min-width: 90px;
+            }
+
+            .login-card {
+                padding: 35px 30px;
+                max-width: 380px;
+            }
         }
 
         /* 移动端优化 */
@@ -3657,25 +3751,98 @@
                 margin-bottom: 4px;
             }
 
-            /* 登录页面优化 */
+            /* 登录页面移动端优化 */
             .login-container {
-                padding: 10px;
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .login-main {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                max-width: 100%;
+            }
+
+            /* 品牌区域移动端优化 */
+            .brand-section {
+                padding: 20px 10px;
+                order: 1;
+            }
+
+            .brand-logo {
+                margin-bottom: 25px;
+            }
+
+            .logo-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+
+            .ring-1 {
+                width: 100px;
+                height: 100px;
+            }
+
+            .ring-2 {
+                width: 120px;
+                height: 120px;
+            }
+
+            .ring-3 {
+                width: 140px;
+                height: 140px;
+            }
+
+            .brand-title {
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+
+            .brand-subtitle {
+                font-size: 14px;
+                margin-bottom: 25px;
+            }
+
+            .brand-features {
+                gap: 15px;
+                justify-content: space-around;
+            }
+
+            .feature-item {
+                padding: 15px 10px;
+                min-width: 80px;
+                flex: 1;
+                max-width: 100px;
+            }
+
+            .feature-item i {
+                font-size: 20px;
+            }
+
+            .feature-item span {
+                font-size: 11px;
+            }
+
+            /* 登录区域移动端优化 */
+            .login-section {
+                order: 2;
             }
 
             .login-card {
-                padding: 25px 20px;
-                border-radius: 15px;
-                max-width: 350px;
+                padding: 30px 25px;
+                border-radius: 20px;
+                max-width: 100%;
+                margin: 0 auto;
             }
 
-            .login-logo {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
+            .login-header h2 {
+                font-size: 24px;
             }
 
-            .login-header h1 {
-                font-size: 28px;
+            .login-header p {
+                font-size: 13px;
             }
 
             .login-header p {
@@ -3688,8 +3855,24 @@
             }
 
             .login-btn {
-                padding: 12px;
-                font-size: 14px;
+                padding: 14px 18px;
+                font-size: 15px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+
+            .login-tips {
+                margin-top: 20px;
+                padding: 15px;
+            }
+
+            .tip-item {
+                margin: 6px 0;
+                padding: 6px 0;
+            }
+
+            .tip-item span {
+                font-size: 12px;
             }
 
             /* 各个页面的移动端优化 */
@@ -3955,6 +4138,81 @@
                 grid-template-columns: 1fr;
             }
 
+            /* 超小屏幕登录页面优化 */
+            .login-container {
+                padding: 10px;
+                padding-top: 20px;
+            }
+
+            .login-main {
+                gap: 20px;
+            }
+
+            .brand-section {
+                padding: 15px 5px;
+            }
+
+            .logo-circle {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+
+            .ring-1 {
+                width: 90px;
+                height: 90px;
+            }
+
+            .ring-2 {
+                width: 110px;
+                height: 110px;
+            }
+
+            .ring-3 {
+                width: 130px;
+                height: 130px;
+            }
+
+            .brand-title {
+                font-size: 28px;
+                letter-spacing: 1px;
+            }
+
+            .brand-subtitle {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            .brand-features {
+                gap: 10px;
+            }
+
+            .feature-item {
+                padding: 12px 8px;
+                min-width: 70px;
+            }
+
+            .feature-item i {
+                font-size: 18px;
+            }
+
+            .feature-item span {
+                font-size: 10px;
+            }
+
+            .login-card {
+                padding: 25px 20px;
+                border-radius: 18px;
+            }
+
+            .login-header h2 {
+                font-size: 22px;
+            }
+
+            .login-header p {
+                font-size: 12px;
+            }
+
             .status-grid {
                 grid-template-columns: 1fr;
             }
@@ -4094,6 +4352,102 @@
 
             .mobile-fab {
                 display: block;
+            }
+        }
+
+        /* 移动设备横屏优化 */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .login-container {
+                padding: 10px;
+                align-items: center;
+            }
+
+            .login-main {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                max-width: 100%;
+                align-items: center;
+            }
+
+            .brand-section {
+                order: 0;
+                padding: 20px 15px;
+            }
+
+            .brand-logo {
+                margin-bottom: 20px;
+            }
+
+            .logo-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .ring-1,
+            .ring-2,
+            .ring-3 {
+                display: none;
+                /* 横屏时隐藏装饰环 */
+            }
+
+            .brand-title {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .brand-subtitle {
+                font-size: 12px;
+                margin-bottom: 15px;
+            }
+
+            .brand-features {
+                gap: 10px;
+            }
+
+            .feature-item {
+                padding: 10px 8px;
+                min-width: 60px;
+            }
+
+            .feature-item i {
+                font-size: 16px;
+            }
+
+            .feature-item span {
+                font-size: 9px;
+            }
+
+            .login-section {
+                order: 1;
+            }
+
+            .login-card {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            .login-header h2 {
+                font-size: 20px;
+            }
+
+            .login-header p {
+                font-size: 11px;
+            }
+
+            .login-btn {
+                padding: 12px 16px;
+                font-size: 14px;
+                margin-top: 15px;
+            }
+
+            .login-tips {
+                margin-top: 15px;
+                padding: 12px;
+            }
+
+            .tip-item span {
+                font-size: 11px;
             }
         }
 
@@ -4277,7 +4631,7 @@
                         <h2>欢迎回来</h2>
                         <p>请登录您的账户</p>
                     </div>
-                    
+
                     <form class="login-form" id="loginForm">
                         <div class="form-group">
                             <label for="username">账号</label>
@@ -4286,7 +4640,7 @@
                                 <input type="text" id="username" placeholder="请输入账号" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="password">密码</label>
                             <div class="input-group">
@@ -4294,7 +4648,7 @@
                                 <input type="password" id="password" placeholder="请输入密码" required>
                             </div>
                         </div>
-                        
+
                         <button type="submit" class="login-btn">
                             <span class="btn-text">
                                 <i class="fas fa-sign-in-alt"></i>
@@ -4302,7 +4656,7 @@
                             </span>
                             <div class="btn-bg"></div>
                         </button>
-                        
+
                         <div class="login-tips">
                             <div class="tip-item">
                                 <i class="fas fa-info-circle"></i>
@@ -6085,9 +6439,13 @@
             animate();
 
             // 登录页面元素入场动画
+            const brandSection = document.querySelector('.brand-section');
+            const logoCircle = document.querySelector('.logo-circle');
+            const brandTitle = document.querySelector('.brand-title');
+            const brandSubtitle = document.querySelector('.brand-subtitle');
+            const featureItems = document.querySelectorAll('.feature-item');
             const loginCard = document.querySelector('.login-card');
-            const loginLogo = document.querySelector('.login-logo');
-            const loginHeader = document.querySelector('.login-header h1');
+            const loginHeader = document.querySelector('.login-header h2');
             const loginSubtitle = document.querySelector('.login-header p');
             const formGroups = document.querySelectorAll('.form-group');
             const loginBtn = document.querySelector('.login-btn');
@@ -6096,38 +6454,48 @@
             // 创建动画时间线
             const tl = gsap.timeline();
 
-            // 登录卡片入场
-            tl.fromTo(loginCard,
-                {
-                    opacity: 0,
-                    scale: 0.8,
-                    y: 50
-                },
-                {
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    duration: 1.2,
-                    ease: "back.out(1.7)"
-                }
-            )
-                // Logo旋转入场
-                .fromTo(loginLogo,
+            // 检测是否为移动设备
+            const isMobileDevice = window.innerWidth <= 768;
+
+            // 品牌区域动画
+            if (brandSection) {
+                tl.fromTo(brandSection,
                     {
                         opacity: 0,
-                        rotation: -180,
-                        scale: 0.5
+                        x: isMobileDevice ? 0 : -50,
+                        y: isMobileDevice ? -30 : 0
                     },
                     {
                         opacity: 1,
-                        rotation: 0,
-                        scale: 1,
+                        x: 0,
+                        y: 0,
                         duration: 1,
+                        ease: "power2.out"
+                    }
+                );
+            }
+
+            // Logo圆圈动画
+            if (logoCircle) {
+                tl.fromTo(logoCircle,
+                    {
+                        opacity: 0,
+                        scale: 0.5,
+                        rotation: -180
+                    },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        rotation: 0,
+                        duration: 1.2,
                         ease: "back.out(1.7)"
                     }, "-=0.8"
-                )
-                // 标题淡入
-                .fromTo(loginHeader,
+                );
+            }
+
+            // 品牌标题动画
+            if (brandTitle) {
+                tl.fromTo(brandTitle,
                     {
                         opacity: 0,
                         y: -20
@@ -6138,9 +6506,12 @@
                         duration: 0.8,
                         ease: "power2.out"
                     }, "-=0.6"
-                )
-                // 副标题淡入
-                .fromTo(loginSubtitle,
+                );
+            }
+
+            // 品牌副标题动画
+            if (brandSubtitle) {
+                tl.fromTo(brandSubtitle,
                     {
                         opacity: 0,
                         y: -10
@@ -6152,6 +6523,77 @@
                         ease: "power2.out"
                     }, "-=0.4"
                 );
+            }
+
+            // 特性项目依次入场
+            featureItems.forEach((item, index) => {
+                tl.fromTo(item,
+                    {
+                        opacity: 0,
+                        y: 20,
+                        scale: 0.8
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.5,
+                        ease: "back.out(1.7)"
+                    }, `-=${0.3 - index * 0.1}`
+                );
+            });
+
+            // 登录卡片入场
+            if (loginCard) {
+                tl.fromTo(loginCard,
+                    {
+                        opacity: 0,
+                        scale: 0.8,
+                        x: isMobileDevice ? 0 : 50,
+                        y: isMobileDevice ? 30 : 0
+                    },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        x: 0,
+                        y: 0,
+                        duration: 1,
+                        ease: "back.out(1.7)"
+                    }, "-=0.8"
+                );
+            }
+
+            // 登录标题动画
+            if (loginHeader) {
+                tl.fromTo(loginHeader,
+                    {
+                        opacity: 0,
+                        y: -15
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, "-=0.5"
+                );
+            }
+
+            // 登录副标题动画
+            if (loginSubtitle) {
+                tl.fromTo(loginSubtitle,
+                    {
+                        opacity: 0,
+                        y: -10
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    }, "-=0.3"
+                );
+            }
 
             // 表单元素依次入场
             formGroups.forEach((group, index) => {
